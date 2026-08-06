@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
+import profileImg from "figma:asset/profile.jpg";
 
 /* ─── types ──────────────────────────────────────────────────────────────── */
 type Section = "hero" | "about" | "experiences" | "projects" | "contact";
@@ -67,7 +68,7 @@ const NODES = [
   { label: "Communication",    x: 52, y: 84 },
   { label: "Figma",            x: 20, y: 78 },
   { label: "Python",           x: 7,  y: 50 },
-  { label: "DB / ERD 설계",     x: 36, y: 10 },
+  { label: "Notion",           x: 36, y: 10 },
 ];
 
 const EXPERIENCES = [
@@ -118,42 +119,66 @@ const PROJECTS = [
     title: "숭실대학교 특별장학금 통합 시스템 (SSUPORT)",
     year: "2026", co: "숭실대학교",
     kpi: "PM · 프로젝트 총괄",
+    period: "2025.09 —",
+    role: "PM (프로젝트 총괄)",
+    area: "웹서비스",
     desc: "여러 절차로 흩어져 있던 학교 특별장학금 신청 과정을 하나의 웹서비스로 통합하는 프로젝트를 기획부터 총괄하고 있습니다.",
+    detail: "특별장학금 신청 시 학생들이 여러 부서와 서류를 오가야 했던 번거로운 절차를 하나의 웹서비스로 통합하는 프로젝트입니다. 기획 단계부터 PM으로 참여해 요구사항 정의, 기능 우선순위 설정, 유관 부서와의 커뮤니케이션을 총괄하고 있습니다.",
     tags: ["웹서비스", "PM", "0→1"],
   },
   {
     title: "딥러닝 기반 공유 전동 킥보드 불법주차 감지 시스템 최적화",
     year: "2025", co: "졸업 프로젝트",
     kpi: "데이터 수집 · 방법론 제안",
+    period: "2025.03 — 2025.09",
+    role: "데이터 수집 및 방법론 제안, 포스터 제작",
+    area: "딥러닝 · 졸업 프로젝트",
     desc: "딥러닝을 활용해 공유 전동 킥보드의 불법주차를 탐지하는 시스템을 최적화했습니다. 데이터 수집과 방법론 제안, 포스터 제작을 담당했습니다.",
+    detail: "공유 전동 킥보드의 무분별한 불법주차 문제를 딥러닝 기반으로 탐지·최적화하는 졸업 프로젝트입니다. 현장 데이터 수집과 탐지 방법론 제안을 맡았고, 연구 결과를 정리한 포스터 제작까지 담당했습니다.",
     tags: ["딥러닝", "데이터 수집", "졸업 프로젝트"],
   },
   {
     title: "지역별 전세가격지수 예측 연구",
     year: "2025", co: "지능시스템연구실",
     kpi: "데이터 분석 연구 과제",
+    period: "2025.02 — 2025.10",
+    role: "데이터 분석 연구 과제",
+    area: "데이터 · 연구",
     desc: "머신러닝 기반으로 지역별 부동산 전세가격지수를 예측하는 연구를 수행했습니다.",
+    detail: "지능시스템연구실 학부연구생으로서 진행한 연구로, 지역별 부동산 전세가격지수를 머신러닝 모델로 예측했습니다. 데이터 전처리부터 모델링, 결과 해석까지 전 과정을 수행했습니다.",
     tags: ["머신러닝", "데이터 분석", "연구"],
   },
   {
     title: "2025 UNITHON 일기짠",
     year: "2025", co: "교내 연합 해커톤 · 대상",
     kpi: "PM 겸 디자이너",
+    period: "2025.08.07 — 2025.08.13",
+    role: "PM (프로젝트 총괄) 및 디자이너",
+    area: "기획 · 디자인 · 해커톤",
     desc: "교내 연합 해커톤에서 PM과 디자이너를 겸하며 서비스 기획과 디자인을 총괄해 대상을 수상했습니다.",
+    detail: "일주일간 진행된 교내 연합 해커톤에서 PM과 디자이너를 동시에 맡아 서비스 기획부터 UI 디자인까지 총괄했습니다. 짧은 기간 안에 빠르게 아이디어를 구체화해 대상을 수상했습니다.",
     tags: ["PM", "디자인", "해커톤"],
   },
   {
     title: "신한은행 헤이영 캠퍼스 제1회 아이디어 경진대회",
     year: "2025", co: "공모전",
     kpi: "PM · 팀장",
+    period: "2025.07.07 — 2025.07.28",
+    role: "PM (공모전 팀장)",
+    area: "기획 · 디자인",
     desc: "아이디어 경진대회에서 팀장으로 기획과 디자인을 총괄했습니다.",
+    detail: "신한은행이 주최한 아이디어 경진대회에 팀장으로 참가해 아이디어 기획과 디자인 방향을 총괄했습니다. 팀원 간 역할을 분배하고 일정을 조율하며 3주간의 짧은 준비 기간을 이끌었습니다.",
     tags: ["기획", "디자인", "팀 리딩"],
   },
   {
     title: "샐러리 앱서비스",
     year: "2024", co: "팀 프로젝트",
     kpi: "PM · 프로젝트 총괄",
+    period: "2024.08 — 2024.12",
+    role: "PM (프로젝트 총괄)",
+    area: "앱서비스",
     desc: "약 4개월간 진행된 앱서비스 프로젝트에서 PM으로 기획 전반을 총괄했습니다.",
+    detail: "약 4개월간 진행된 앱서비스 팀 프로젝트에서 PM으로서 기획 전반을 총괄했습니다. 요구사항 정리부터 팀 일정 관리, 최종 결과물 방향 조율까지 담당했습니다.",
     tags: ["앱서비스", "PM", "기획"],
   },
 ];
@@ -219,7 +244,7 @@ function Nav({ active, goTo }: { active: Section; goTo: (s: Section) => void }) 
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? "bg-[#0c0d1e]/90 backdrop-blur-2xl border-b border-foreground/[0.04]" : ""
+      scrolled ? "bg-[#faf6ec]/90 backdrop-blur-2xl border-b border-foreground/[0.04]" : ""
     }`}>
       <div className="max-w-[1160px] mx-auto px-8 h-14 flex items-center justify-between">
         <button
@@ -275,19 +300,19 @@ function Hero() {
       <div
         className="pointer-events-none absolute w-[560px] h-[560px] rounded-full blur-[150px] opacity-[0.08]"
         style={{
-          background: "radial-gradient(circle, #c8d8ff 0%, #8aabff 40%, transparent 75%)",
+          background: "radial-gradient(circle, #4a5a99 0%, #26315e 40%, transparent 75%)",
           left: `calc(${smoothPos.x}% - 280px)`,
           top:  `calc(${smoothPos.y}% - 280px)`,
         }}
       />
       {/* Static ambient */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-[#8aabff]/5 blur-[100px]" />
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-[#26315e]/5 blur-[100px]" />
       </div>
       {/* Grid */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.025]"
         style={{
-          backgroundImage: "linear-gradient(rgba(237,232,218,1) 1px, transparent 1px), linear-gradient(90deg, rgba(237,232,218,1) 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(rgba(27,35,64,1) 1px, transparent 1px), linear-gradient(90deg, rgba(27,35,64,1) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }}
       />
@@ -299,7 +324,7 @@ function Hero() {
             key={node.label}
             x1={`${smoothPos.x}%`} y1={`${smoothPos.y}%`}
             x2={`${node.x}%`} y2={`${node.y}%`}
-            stroke="#ede8da"
+            stroke="#1b2340"
             strokeWidth={hovered === node.label ? "0.7" : "0.35"}
             strokeDasharray="3 7"
           />
@@ -357,8 +382,11 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.65, duration: 0.6 }}
-            className="hidden md:flex flex-col items-end gap-1 pb-1.5"
+            className="hidden md:flex flex-col items-end gap-3 pb-1.5"
           >
+            <div className="w-14 h-14 rounded-full overflow-hidden border border-foreground/15">
+              <img src={profileImg} alt="류다인" className="w-full h-full object-cover grayscale-[15%]" />
+            </div>
             <span className="font-['DM_Mono'] text-[10px] tracking-[0.1em] text-foreground/20">숭실대학교 산업정보시스템공학과</span>
             <span className="font-['DM_Mono'] text-[10px] tracking-[0.1em] text-foreground/20">37.5665°N 126.9780°E</span>
           </motion.div>
@@ -387,6 +415,9 @@ function About() {
         <FadeIn><Label n="01">About</Label></FadeIn>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-20 items-start">
           <FadeIn delay={0.08}>
+            <div className="w-[180px] aspect-[3/4] rounded-xl overflow-hidden border border-foreground/[0.08] mb-8">
+              <img src={profileImg} alt="류다인 프로필 사진" className="w-full h-full object-cover grayscale-[15%]" />
+            </div>
             <h2 className="font-bold text-[clamp(2rem,4vw,3rem)] leading-[1.0] tracking-[-0.045em] text-foreground">
               데이터로 문제를 찾고,
               <br />팀과 함께 제품을 만듭니다.
@@ -456,7 +487,68 @@ function Experiences() {
 }
 
 /* ─── projects ───────────────────────────────────────────────────────────── */
+function ProjectModal({ project, onClose }: { project: typeof PROJECTS[number] | null; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[60] flex items-center justify-center p-6 bg-foreground/20 backdrop-blur-sm"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-card border border-foreground/[0.08] rounded-2xl p-8 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 text-[11px] font-['DM_Mono'] tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors uppercase"
+            >
+              close ✕
+            </button>
+            <p className="font-['DM_Mono'] text-[10px] tracking-[0.12em] text-muted-foreground/50 uppercase">{project.co} · {project.year}</p>
+            <h3 className="mt-2 text-[22px] font-semibold tracking-[-0.035em] text-foreground leading-tight pr-16">{project.title}</h3>
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <div>
+                <p className="font-['DM_Mono'] text-[9px] tracking-[0.16em] text-muted-foreground/40 uppercase">Period</p>
+                <p className="mt-1 text-[12px] text-foreground/80">{project.period}</p>
+              </div>
+              <div>
+                <p className="font-['DM_Mono'] text-[9px] tracking-[0.16em] text-muted-foreground/40 uppercase">Role</p>
+                <p className="mt-1 text-[12px] text-foreground/80">{project.role}</p>
+              </div>
+              <div className="col-span-2">
+                <p className="font-['DM_Mono'] text-[9px] tracking-[0.16em] text-muted-foreground/40 uppercase">Area</p>
+                <p className="mt-1 text-[12px] text-foreground/80">{project.area}</p>
+              </div>
+            </div>
+            <p className="mt-6 text-[13px] tracking-[-0.015em] leading-[1.8] text-muted-foreground font-light">{project.detail}</p>
+            <div className="flex flex-wrap gap-1.5 mt-6">
+              {project.tags.map((t) => (
+                <span key={t} className="px-2.5 py-1 text-[10px] font-['DM_Mono'] rounded-md bg-muted border border-foreground/[0.05] text-muted-foreground">{t}</span>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 function Projects() {
+  const [selected, setSelected] = useState<typeof PROJECTS[number] | null>(null);
   return (
     <section id="projects" className="min-h-screen flex items-center py-24 border-t border-foreground/[0.05]">
       <div className="max-w-[1160px] mx-auto px-8 w-full">
@@ -464,7 +556,10 @@ function Projects() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/[0.05]">
           {PROJECTS.map((p, i) => (
             <FadeIn key={p.title} delay={i * 0.05}>
-              <div className="bg-background p-8 hover:bg-secondary transition-colors duration-300 h-full flex flex-col gap-5">
+              <button
+                onClick={() => setSelected(p)}
+                className="text-left w-full group bg-background p-8 hover:bg-secondary transition-colors duration-300 h-full flex flex-col gap-5"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-['DM_Mono'] text-[10px] tracking-[0.12em] text-muted-foreground/35 uppercase">{p.co} · {p.year}</p>
@@ -478,11 +573,13 @@ function Projects() {
                     <span key={t} className="px-2 py-1 text-[10px] font-['DM_Mono'] rounded-sm bg-muted/50 border border-foreground/[0.05] text-muted-foreground/60">{t}</span>
                   ))}
                 </div>
-              </div>
+                <span className="font-['DM_Mono'] text-[9px] tracking-[0.1em] text-primary/50 uppercase group-hover:text-primary">자세히 보기 →</span>
+              </button>
             </FadeIn>
           ))}
         </div>
       </div>
+      <ProjectModal project={selected} onClose={() => setSelected(null)} />
     </section>
   );
 }
@@ -538,7 +635,7 @@ function Contact() {
                 />
               </div>
               <button type="submit"
-                className="self-start mt-1 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-[#0c0d1e] text-[12px] tracking-[-0.02em] font-semibold hover:bg-[#adc4ff] transition-colors"
+                className="self-start mt-1 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-[#faf6ec] text-[12px] tracking-[-0.02em] font-semibold hover:bg-[#3a4a80] transition-colors"
               >
                 Send
                 <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
