@@ -201,9 +201,9 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
 function Label({ n, children }: { n: string; children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-3 mb-8">
-      <span className="font-['DM_Mono'] text-[10px] tracking-[0.22em] text-primary/40">{n}</span>
+      <span className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.22em] text-primary/60">{n}</span>
       <div className="w-3 h-px bg-primary/20" />
-      <span className="font-['DM_Mono'] text-[10px] tracking-[0.22em] text-primary/40 uppercase">{children}</span>
+      <span className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.22em] text-primary/60 uppercase">{children}</span>
     </div>
   );
 }
@@ -220,7 +220,7 @@ function SideProgress({ active, goTo }: { active: Section; goTo: (s: Section) =>
           title={s}
         >
           <span className={`text-[9px] font-['DM_Mono'] tracking-[0.12em] uppercase transition-all duration-300 ${
-            active === s ? "text-foreground/60 opacity-100" : "text-foreground/0 group-hover:text-foreground/30 group-hover:opacity-100"
+            active === s ? "text-foreground/78 opacity-100" : "text-foreground/0 group-hover:text-foreground/55 group-hover:opacity-100"
           }`}>
             {s}
           </span>
@@ -244,7 +244,7 @@ function Nav({ active, goTo }: { active: Section; goTo: (s: Section) => void }) 
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? "bg-[#faf6ec]/90 backdrop-blur-2xl border-b border-foreground/[0.04]" : ""
+      scrolled ? "bg-[#fefefe]/90 backdrop-blur-2xl border-b border-foreground/[0.04]" : ""
     }`}>
       <div className="max-w-[1160px] mx-auto px-8 h-14 flex items-center justify-between">
         <button
@@ -300,19 +300,19 @@ function Hero() {
       <div
         className="pointer-events-none absolute w-[560px] h-[560px] rounded-full blur-[150px] opacity-[0.08]"
         style={{
-          background: "radial-gradient(circle, #4a5a99 0%, #26315e 40%, transparent 75%)",
+          background: "radial-gradient(circle, #ffa9ec 0%, #ff42d0 40%, transparent 75%)",
           left: `calc(${smoothPos.x}% - 280px)`,
           top:  `calc(${smoothPos.y}% - 280px)`,
         }}
       />
       {/* Static ambient */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-[#26315e]/5 blur-[100px]" />
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-[#ff42d0]/5 blur-[100px]" />
       </div>
       {/* Grid */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.025]"
         style={{
-          backgroundImage: "linear-gradient(rgba(27,35,64,1) 1px, transparent 1px), linear-gradient(90deg, rgba(27,35,64,1) 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(rgba(16,23,58,1) 1px, transparent 1px), linear-gradient(90deg, rgba(16,23,58,1) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }}
       />
@@ -324,8 +324,8 @@ function Hero() {
             key={node.label}
             x1={`${smoothPos.x}%`} y1={`${smoothPos.y}%`}
             x2={`${node.x}%`} y2={`${node.y}%`}
-            stroke="#1b2340"
-            strokeWidth={hovered === node.label ? "0.7" : "0.35"}
+            stroke={hovered === node.label ? "#ff42d0" : "#10173a"}
+            strokeWidth={hovered === node.label ? "0.9" : "0.35"}
             strokeDasharray="3 7"
           />
         ))}
@@ -338,8 +338,8 @@ function Hero() {
           onMouseEnter={() => setHovered(node.label)}
           onMouseLeave={() => setHovered(null)}
         >
-          <span className={`text-[10px] tracking-[-0.01em] font-['DM_Mono'] whitespace-nowrap transition-colors duration-200 ${
-            hovered === node.label ? "text-foreground/70" : "text-foreground/22"
+          <span className={`text-[11px] tracking-[-0.01em] font-['DM_Mono'] font-medium whitespace-nowrap transition-colors duration-200 ${
+            hovered === node.label ? "text-[#ff42d0]" : "text-foreground/45"
           }`}>
             {node.label}
           </span>
@@ -351,7 +351,7 @@ function Hero() {
         style={{
           left: `calc(${smoothPos.x}% - 3px)`,
           top:  `calc(${smoothPos.y}% - 3px)`,
-          boxShadow: "0 0 10px 2px rgba(138,171,255,0.35)",
+          boxShadow: "0 0 12px 3px rgba(255,66,208,0.4)",
         }}
       />
 
@@ -363,7 +363,7 @@ function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
-              className="font-['DM_Mono'] text-[10px] tracking-[0.2em] text-primary/50 uppercase mb-4"
+              className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.2em] text-primary/70 uppercase mb-4"
             >
               PM · Data Analyst · Seoul
             </motion.p>
@@ -387,8 +387,8 @@ function Hero() {
             <div className="w-14 h-14 rounded-full overflow-hidden border border-foreground/15">
               <img src={profileImg} alt="류다인" className="w-full h-full object-cover grayscale-[15%]" />
             </div>
-            <span className="font-['DM_Mono'] text-[10px] tracking-[0.1em] text-foreground/20">숭실대학교 산업정보시스템공학과</span>
-            <span className="font-['DM_Mono'] text-[10px] tracking-[0.1em] text-foreground/20">37.5665°N 126.9780°E</span>
+            <span className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.1em] text-foreground/42">숭실대학교 산업정보시스템공학과</span>
+            <span className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.1em] text-foreground/42">37.5665°N 126.9780°E</span>
           </motion.div>
         </div>
       </div>
@@ -400,7 +400,7 @@ function Hero() {
         transition={{ delay: 1.1 }}
         className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
       >
-        <span className="font-['DM_Mono'] text-[8px] tracking-[0.2em] text-foreground/20 uppercase">scroll</span>
+        <span className="font-['DM_Mono'] font-medium text-[10px] tracking-[0.2em] text-foreground/42 uppercase">scroll</span>
         <div className="w-px h-6 bg-gradient-to-b from-foreground/10 to-transparent" />
       </motion.div>
     </section>
@@ -442,7 +442,7 @@ function About() {
               ].map(({ n, l }) => (
                 <div key={l} className="border-t border-foreground/[0.08] pt-4">
                   <p className="font-bold text-2xl tracking-[-0.05em] text-foreground">{n}</p>
-                  <p className="font-['DM_Mono'] text-[10px] tracking-[0.08em] text-muted-foreground/50 mt-1 uppercase">{l}</p>
+                  <p className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.08em] text-muted-foreground/70 mt-1 uppercase">{l}</p>
                 </div>
               ))}
             </div>
@@ -467,10 +467,10 @@ function Experiences() {
         {EXPERIENCES.map((e, i) => (
           <FadeIn key={e.id} delay={i * 0.07}>
             <div className="grid grid-cols-1 md:grid-cols-[130px_1fr] gap-4 md:gap-16 py-8 border-b border-foreground/[0.05] hover:border-foreground/[0.1] transition-colors">
-              <p className="font-['DM_Mono'] text-[10px] tracking-[0.06em] text-muted-foreground/35 pt-0.5 whitespace-nowrap">{e.period}</p>
+              <p className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.06em] text-muted-foreground/55 pt-0.5 whitespace-nowrap">{e.period}</p>
               <div>
                 <p className="text-[15px] font-semibold tracking-[-0.03em] text-foreground">{e.role}</p>
-                <p className="text-[12px] tracking-[-0.01em] text-primary/70 mt-0.5">{e.company}</p>
+                <p className="text-[12px] tracking-[-0.01em] text-primary/85 mt-0.5">{e.company}</p>
                 <p className="mt-3 text-[13px] tracking-[-0.015em] leading-[1.75] text-muted-foreground font-light max-w-xl">{e.desc}</p>
                 <div className="flex flex-wrap gap-1.5 mt-3.5">
                   {e.tags.map((t) => (
@@ -518,20 +518,20 @@ function ProjectModal({ project, onClose }: { project: typeof PROJECTS[number] |
             >
               close ✕
             </button>
-            <p className="font-['DM_Mono'] text-[10px] tracking-[0.12em] text-muted-foreground/50 uppercase">{project.co} · {project.year}</p>
+            <p className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.12em] text-muted-foreground/70 uppercase">{project.co} · {project.year}</p>
             <h3 className="mt-2 text-[22px] font-semibold tracking-[-0.035em] text-foreground leading-tight pr-16">{project.title}</h3>
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div>
-                <p className="font-['DM_Mono'] text-[9px] tracking-[0.16em] text-muted-foreground/40 uppercase">Period</p>
-                <p className="mt-1 text-[12px] text-foreground/80">{project.period}</p>
+                <p className="font-['DM_Mono'] font-medium text-[10px] tracking-[0.16em] text-muted-foreground/60 uppercase">Period</p>
+                <p className="mt-1 text-[12px] text-foreground/90">{project.period}</p>
               </div>
               <div>
-                <p className="font-['DM_Mono'] text-[9px] tracking-[0.16em] text-muted-foreground/40 uppercase">Role</p>
-                <p className="mt-1 text-[12px] text-foreground/80">{project.role}</p>
+                <p className="font-['DM_Mono'] font-medium text-[10px] tracking-[0.16em] text-muted-foreground/60 uppercase">Role</p>
+                <p className="mt-1 text-[12px] text-foreground/90">{project.role}</p>
               </div>
               <div className="col-span-2">
-                <p className="font-['DM_Mono'] text-[9px] tracking-[0.16em] text-muted-foreground/40 uppercase">Area</p>
-                <p className="mt-1 text-[12px] text-foreground/80">{project.area}</p>
+                <p className="font-['DM_Mono'] font-medium text-[10px] tracking-[0.16em] text-muted-foreground/60 uppercase">Area</p>
+                <p className="mt-1 text-[12px] text-foreground/90">{project.area}</p>
               </div>
             </div>
             <p className="mt-6 text-[13px] tracking-[-0.015em] leading-[1.8] text-muted-foreground font-light">{project.detail}</p>
@@ -562,18 +562,18 @@ function Projects() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-['DM_Mono'] text-[10px] tracking-[0.12em] text-muted-foreground/35 uppercase">{p.co} · {p.year}</p>
+                    <p className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.12em] text-muted-foreground/55 uppercase">{p.co} · {p.year}</p>
                     <h3 className="mt-1.5 text-[16px] font-semibold tracking-[-0.035em] text-foreground leading-tight">{p.title}</h3>
                   </div>
-                  <span className="font-['DM_Mono'] text-[10px] tracking-[-0.01em] text-primary/60 whitespace-nowrap pt-5 shrink-0">{p.kpi}</span>
+                  <span className="font-['DM_Mono'] font-medium text-[11px] tracking-[-0.01em] text-primary/78 whitespace-nowrap pt-5 shrink-0">{p.kpi}</span>
                 </div>
                 <p className="text-[13px] tracking-[-0.015em] leading-[1.75] text-muted-foreground font-light flex-1">{p.desc}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {p.tags.map((t) => (
-                    <span key={t} className="px-2 py-1 text-[10px] font-['DM_Mono'] rounded-sm bg-muted/50 border border-foreground/[0.05] text-muted-foreground/60">{t}</span>
+                    <span key={t} className="px-2 py-1 text-[10px] font-['DM_Mono'] rounded-sm bg-muted/50 border border-foreground/[0.05] text-muted-foreground/78">{t}</span>
                   ))}
                 </div>
-                <span className="font-['DM_Mono'] text-[9px] tracking-[0.1em] text-primary/50 uppercase group-hover:text-primary">자세히 보기 →</span>
+                <span className="font-['DM_Mono'] font-medium text-[10px] tracking-[0.1em] text-primary/70 uppercase group-hover:text-primary">자세히 보기 →</span>
               </button>
             </FadeIn>
           ))}
@@ -595,7 +595,7 @@ function Contact() {
             <h2 className="font-bold text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[0.94] tracking-[-0.055em] text-foreground">
               Let's build
               <br />
-              <span className="text-primary/80">together.</span>
+              <span className="text-primary/90">together.</span>
             </h2>
             <p className="mt-5 text-[13px] tracking-[-0.02em] leading-[1.8] text-muted-foreground font-light max-w-xs">
               함께할 프로젝트나 궁금한 점이 있다면 편하게 연락 주세요.
@@ -622,20 +622,20 @@ function Contact() {
                 { label: "Email",   type: "email", placeholder: "your@email.com" },
               ].map(({ label, type, placeholder }) => (
                 <div key={label} className="flex flex-col gap-1.5">
-                  <label className="font-['DM_Mono'] text-[10px] tracking-[0.16em] text-muted-foreground/35 uppercase">{label}</label>
+                  <label className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.16em] text-muted-foreground/55 uppercase">{label}</label>
                   <input type={type} placeholder={placeholder}
-                    className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/20 focus:outline-none focus:border-primary/25 transition-colors"
+                    className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/42 focus:outline-none focus:border-primary/25 transition-colors"
                   />
                 </div>
               ))}
               <div className="flex flex-col gap-1.5">
-                <label className="font-['DM_Mono'] text-[10px] tracking-[0.16em] text-muted-foreground/35 uppercase">Message</label>
+                <label className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.16em] text-muted-foreground/55 uppercase">Message</label>
                 <textarea rows={4} placeholder="Tell me about your project or just say hi..."
-                  className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/20 focus:outline-none focus:border-primary/25 transition-colors resize-none"
+                  className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/42 focus:outline-none focus:border-primary/25 transition-colors resize-none"
                 />
               </div>
               <button type="submit"
-                className="self-start mt-1 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-[#faf6ec] text-[12px] tracking-[-0.02em] font-semibold hover:bg-[#3a4a80] transition-colors"
+                className="self-start mt-1 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-[12px] tracking-[-0.02em] font-semibold hover:bg-[#ff6bda] transition-colors"
               >
                 Send
                 <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -653,8 +653,8 @@ function Footer() {
   return (
     <footer className="border-t border-foreground/[0.04] py-7">
       <div className="max-w-[1160px] mx-auto px-8 flex items-center justify-between">
-        <p className="font-['DM_Mono'] text-[10px] tracking-[0.1em] text-foreground/20">RYU DAIN</p>
-        <p className="font-['DM_Mono'] text-[10px] tracking-[0.1em] text-foreground/15">© 2026</p>
+        <p className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.1em] text-foreground/42">RYU DAIN</p>
+        <p className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.1em] text-foreground/35">© 2026</p>
       </div>
     </footer>
   );
