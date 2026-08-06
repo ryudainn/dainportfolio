@@ -28,6 +28,15 @@ function useSectionScroll(active: Section, setActive: (s: Section) => void) {
     const onWheel = (e: WheelEvent) => {
       if (locked.current) { e.preventDefault(); return; }
       const dir = e.deltaY > 0 ? 1 : -1;
+      const el = document.getElementById(active);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        // If the active section is taller than the viewport, let the browser
+        // scroll naturally through its content first — only snap once we've
+        // reached the section's top/bottom edge.
+        if (dir === 1 && rect.bottom > window.innerHeight + 2) return;
+        if (dir === -1 && rect.top < -2) return;
+      }
       const idx = SECTIONS.indexOf(active);
       const next = SECTIONS[Math.max(0, Math.min(SECTIONS.length - 1, idx + dir))];
       if (next === active) return;
@@ -586,6 +595,35 @@ function Projects() {
 
 /* ─── contact ────────────────────────────────────────────────────────────── */
 function Contact() {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xdenobzb";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="min-h-screen flex items-center py-24 border-t border-foreground/[0.05]">
       <div className="max-w-[1160px] mx-auto px-8 w-full">
@@ -616,30 +654,47 @@ function Contact() {
           </FadeIn>
 
           <FadeIn delay={0.14}>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-3">
-              {[
-                { label: "Name",    type: "text",  placeholder: "Your name" },
-                { label: "Email",   type: "email", placeholder: "your@email.com" },
-              ].map(({ label, type, placeholder }) => (
-                <div key={label} className="flex flex-col gap-1.5">
-                  <label className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.16em] text-muted-foreground/55 uppercase">{label}</label>
-                  <input type={type} placeholder={placeholder}
-                    className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/42 focus:outline-none focus:border-primary/25 transition-colors"
-                  />
-                </div>
-              ))}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
+                <label className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.16em] text-muted-foreground/55 uppercase">Name</label>
+                <input
+                  type="text" placeholder="Your name" required
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/42 focus:outline-none focus:border-primary/25 transition-colors"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.16em] text-muted-foreground/55 uppercase">Email</label>
+                <input
+                  type="email" placeholder="your@email.com" required
+                  value={form.email}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                  className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/42 focus:outline-none focus:border-primary/25 transition-colors"
+                />
+              </div>
               <div className="flex flex-col gap-1.5">
                 <label className="font-['DM_Mono'] font-medium text-[11px] tracking-[0.16em] text-muted-foreground/55 uppercase">Message</label>
                 <textarea rows={4} placeholder="Tell me about your project or just say hi..."
+                  required
+                  value={form.message}
+                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   className="px-4 py-3 bg-card border border-foreground/[0.07] rounded-lg text-[13px] tracking-[-0.02em] text-foreground placeholder:text-muted-foreground/42 focus:outline-none focus:border-primary/25 transition-colors resize-none"
                 />
               </div>
               <button type="submit"
-                className="self-start mt-1 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-[12px] tracking-[-0.02em] font-semibold hover:bg-[#ff6bda] transition-colors"
+                disabled={status === "sending"}
+                className="self-start mt-1 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-[12px] tracking-[-0.02em] font-semibold hover:bg-[#ff6bda] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                Send
+                {status === "sending" ? "Sending..." : "Send"}
                 <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
+              {status === "success" && (
+                <p className="text-[11px] text-primary/90 mt-1">메일이 정상적으로 전송됐어요. 곧 확인 후 연락드릴게요 🙂</p>
+              )}
+              {status === "error" && (
+                <p className="text-[11px] text-destructive mt-1">전송에 실패했어요. daihn03@naver.com으로 직접 메일 주셔도 좋아요.</p>
+              )}
             </form>
           </FadeIn>
         </div>
